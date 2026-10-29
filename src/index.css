@@ -1,111 +1,466 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   EVA / Luna Design System — Web tokens
+   Source of truth: docs/design-token.md
+   Tailwind v4 uses CSS-first config: every `--*` inside @theme becomes a
+   utility (e.g. --color-primary → bg-primary / text-primary).
+   ========================================================================== */
+
+@theme {
+  /* --- Typography --- */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* --- Color Palette --- */
+  --color-primary: #5358cb;
+  --color-primary-light: #8b93ff;
+  --color-primary-container: #e8e9ff;
+  --color-primary-vivid: #6c63ff; /* FAB gradient start */
+  --color-primary-deep: #3b3e99; /* FAB gradient end */
+  --color-secondary: #e2daff;
+  --color-secondary-dark: #605a79;
+  --color-tertiary: #a7e6ff;
+  --color-tertiary-dark: #20667b;
+  --color-blush: #ffb6c1; /* iridescent orb spectrum */
+
+  --color-canvas: #f8f9fe; /* AppColors.background */
+  --color-surface: #ffffff;
+  --color-obsidian: #0c0a14; /* Dark canvas (web) */
+
+  /* Text */
+  --color-ink: #191c1f; /* textPrimary */
+  --color-ink-soft: #767684; /* textSecondary */
+  --color-ink-muted: #9ea0ab; /* textLight */
+
+  /* Lines & glass */
+  --color-divider: rgba(83, 88, 203, 0.055);
+  --color-border-subtle: #e2e8f0;
+  --color-glass: rgba(255, 255, 255, 0.8);
+  --color-glass-border: rgba(255, 255, 255, 0.4);
+
+  /* Status */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ba1a1a;
+  --color-crisis-bg: #fef2f2;
+  --color-crisis-border: #fecaca;
+  --color-crisis-text: #991b1b;
+
+  /* DASS-21 severity */
+  --color-dass-normal: #2e7d32;
+  --color-dass-mild: #fbc02d;
+  --color-dass-moderate: #f57c00;
+  --color-dass-severe: #e65100;
+  --color-dass-extreme: #d32f2f;
+
+  /* --- Type scale (mobile app scale, 1:1) --- */
+  --text-display: 1.75rem; /* 28px */
+  --text-display--line-height: 1.3;
+  --text-display--font-weight: 700;
+  --text-headline: 1.375rem; /* 22px */
+  --text-headline--line-height: 1.3;
+  --text-headline--font-weight: 700;
+  --text-title-md: 1rem; /* 16px */
+  --text-title-md--line-height: 1.4;
+  --text-title-md--font-weight: 600;
+  --text-body-lg: 0.9375rem; /* 15px */
+  --text-body-lg--line-height: 1.5;
+  --text-body-md: 0.875rem; /* 14px */
+  --text-body-md--line-height: 1.5;
+  --text-caption: 0.75rem; /* 12px */
+  --text-caption--line-height: 1.4;
+  --text-caption--letter-spacing: 0.04em;
+  --text-caption--font-weight: 600;
+  --text-overline: 0.6875rem; /* 11px */
+  --text-overline--line-height: 1.2;
+  --text-overline--letter-spacing: 0.12em;
+  --text-overline--font-weight: 800;
+
+  /* Web-only scale-ups for landing hero / section titles (same weight & leading) */
+  --text-hero: clamp(2.5rem, 1.8rem + 3vw, 4.25rem);
+  --text-hero--line-height: 1.12;
+  --text-hero--letter-spacing: -0.025em;
+  --text-hero--font-weight: 700;
+  --text-section: clamp(1.85rem, 1.45rem + 1.8vw, 2.85rem);
+  --text-section--line-height: 1.2;
+  --text-section--letter-spacing: -0.02em;
+  --text-section--font-weight: 700;
+
+  /* --- Border radius hierarchy --- */
+  --radius-badge: 8px;
+  --radius-icon: 14px;
+  --radius-shortcut: 18px;
+  --radius-card: 24px;
+  --radius-modal: 28px;
+  --radius-pill: 9999px;
+
+  /* --- Shadows & elevation --- */
+  --shadow-subtle: 0 2px 10px rgba(0, 0, 0, 0.05); /* L1 */
+  --shadow-glass: 0 10px 30px rgba(83, 88, 203, 0.08); /* L2 */
+  --shadow-btn: 0 4px 14px rgba(83, 88, 203, 0.3); /* L3 */
+  --shadow-nav: 0 8px 25px rgba(83, 88, 203, 0.12), 0 2px 10px rgba(0, 0, 0, 0.05); /* L4 */
+  --shadow-fab: 0 6px 20px rgba(83, 88, 203, 0.45); /* L5 */
+  --shadow-halo: 0 0 36px rgba(199, 210, 254, 0.4), 0 0 28px rgba(255, 209, 220, 0.3);
+
+  /* --- Motion --- */
+  --ease-luna: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+  --animate-breath: breath 3.2s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.1s ease-in-out infinite alternate;
+  --animate-spin-slow: spin 14s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-wave: wave 1.2s ease-in-out infinite;
+  --animate-enter: enter 320ms var(--ease-luna) both;
+
+  @keyframes breath {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.85;
+    }
+    50% {
+      transform: scale(1.06);
+      opacity: 1;
+    }
+  }
+  @keyframes shimmer {
+    0% {
+      opacity: 0.28;
+    }
+    100% {
+      opacity: 0.68;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes wave {
+    0%,
+    100% {
+      transform: scaleY(0.35);
+    }
+    50% {
+      transform: scaleY(1);
+    }
+  }
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ==========================================================================
+   Raw CSS custom properties (for non-Tailwind usage / inline styles)
+   ========================================================================== */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --gradient-bg-screen: linear-gradient(180deg, #f3f5ff 0%, #e9ecff 50%, #f8f9fe 100%);
+  --gradient-fab: linear-gradient(135deg, #6c63ff 0%, #5358cb 50%, #3b3e99 100%);
+  --gradient-insight: linear-gradient(135deg, #ede9fe 0%, #f3e8ff 50%, #e0e7ff 100%);
+  --gradient-orb: conic-gradient(from 0deg, #ffb6c1, #e2daff, #a7e6ff, #8b93ff, #ffb6c1);
+  --gradient-orb-halo: radial-gradient(
+    circle,
+    rgba(199, 210, 254, 0.35) 0%,
+    rgba(255, 209, 220, 0.2) 60%,
+    transparent 100%
+  );
+  --glass-blur: blur(20px);
+  --duration-fast: 250ms;
+  --duration-normal: 320ms;
+  --nav-height: 76px;
+}
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  html {
+    scroll-padding-top: calc(var(--nav-height) + 16px);
+    -webkit-text-size-adjust: 100%;
+  }
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  body {
+    @apply bg-canvas font-sans text-body-lg text-ink-soft antialiased;
+    min-height: 100dvh;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-ink;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    @apply bg-primary-container text-primary;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+/* ==========================================================================
+   Custom Scrollbar (Slim & Calming — ekyamuhammad.com style with EVA palette)
+   ========================================================================== */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #b8bfff var(--color-canvas);
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-canvas);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b8bfff;
+  border-radius: 9999px;
+  transition: background-color 0.25s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-light);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--color-primary);
+}
+
+
+/* ==========================================================================
+   Components & utilities
+   ========================================================================== */
+@utility glass {
+  background: var(--color-glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1.2px solid var(--color-glass-border);
+  box-shadow: var(--shadow-glass);
+}
+
+@utility bg-luna-screen {
+  background-image: var(--gradient-bg-screen);
+}
+@utility bg-luna-fab {
+  background-image: var(--gradient-fab);
+}
+@utility bg-luna-insight {
+  background-image: var(--gradient-insight);
+}
+@utility bg-luna-orb {
+  background-image: var(--gradient-orb);
+}
+@utility bg-luna-halo {
+  background-image: var(--gradient-orb-halo);
+}
+
+@utility text-gradient {
+  background-image: linear-gradient(120deg, #6c63ff 0%, #5358cb 45%, #8b93ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Staggered entrance (design-token: 320ms, base 60ms, +40ms / item).
+   Usage: className="animate-enter" style={{ '--i': n }} */
+.animate-enter {
+  animation-delay: calc(60ms + var(--i, 0) * 40ms);
+}
+
+/* Scroll reveal — progressive enhancement via scroll-driven animations.
+   Purely decorative, so unsupported browsers simply show static content. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    @keyframes reveal-up {
+      from {
+        opacity: 0;
+        transform: translateY(28px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .reveal {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 28%;
+    }
   }
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+  @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   Lenis Smooth Scroll
+   ========================================================================== */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Custom Cursor (ekyamuhammad.com Dot-to-Pill Morphing adapted for EVA)
+   ========================================================================== */
+@media (pointer: fine) and (hover: hover) {
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor [role='button'],
+  html.has-custom-cursor [data-cursor] {
+    cursor: none !important;
+  }
+
+  /* Preserve native text caret on form fields for user comfort */
+  html.has-custom-cursor input,
+  html.has-custom-cursor textarea,
+  html.has-custom-cursor select {
+    cursor: text !important;
+  }
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
   display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
 }
 
-body {
-  margin: 0;
+.custom-cursor.is-active {
+  opacity: 1;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+.cursor-pill {
+  min-width: 12px;
+  min-height: 12px;
+  height: 12px;
+  background-color: var(--color-primary);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-shadow: 0 2px 10px rgba(83, 88, 203, 0.32);
+  transition:
+    width 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    padding 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-radius 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.28s ease,
+    box-shadow 0.28s ease,
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.25s ease;
+  overflow: hidden;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+.cursor-label {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 0.22s ease 0.04s,
+    transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) 0.04s,
+    color 0.25s ease;
+  pointer-events: none;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+.custom-cursor.has-label .cursor-pill {
+  height: 28px;
+  padding: 6px 15px;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(83, 88, 203, 0.42);
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.custom-cursor.has-label .cursor-label {
+  opacity: 1;
+  transform: scale(1);
 }
+
+.custom-cursor.is-pressed .cursor-pill {
+  transform: scale(0.86);
+}
+
+.custom-cursor.is-text-input .cursor-pill {
+  transform: scale(0);
+  opacity: 0;
+}
+
+/* Adaptive light cursor when hovering dark sections (e.g. Early Access bg-obsidian) */
+.custom-cursor.is-on-dark .cursor-pill {
+  background-color: #ffffff;
+  box-shadow:
+    0 4px 18px rgba(139, 147, 255, 0.45),
+    0 0 0 1.5px rgba(232, 233, 255, 0.5);
+}
+
+.custom-cursor.is-on-dark .cursor-label {
+  color: var(--color-primary-deep);
+}
+
