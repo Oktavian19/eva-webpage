@@ -1,11 +1,18 @@
 import { ChevronDown, HelpCircle, Sparkles } from 'lucide-react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Container, SectionHeading } from '@/components/ui'
-import { faqs } from '@/content/landing'
+import { faqs as defaultFaqs } from '@/content/landing'
 import { cn } from '@/lib/cn'
+import { usePortalDb } from '@/lib/portalStore'
 
 export function FAQ() {
-  const [openId, setOpenId] = useState<string | null>(faqs[0].id)
+  const { db } = usePortalDb()
+  const faqs = useMemo(() => {
+    const published = db.faqs?.filter((item) => item.isPublished)
+    return published && published.length > 0 ? published : defaultFaqs
+  }, [db.faqs])
+
+  const [openId, setOpenId] = useState<string | null>(() => faqs[0]?.id ?? null)
 
   const toggle = (id: string) => {
     setOpenId((prev) => (prev === id ? null : id))

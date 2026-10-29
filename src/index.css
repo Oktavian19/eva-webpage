@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './styles/cursor.css';
 
 /* ==========================================================================
    EVA / Luna Design System — Web tokens
@@ -15,22 +16,22 @@
   --color-primary: #5358cb;
   --color-primary-light: #8b93ff;
   --color-primary-container: #e8e9ff;
-  --color-primary-vivid: #6c63ff; /* FAB gradient start */
-  --color-primary-deep: #3b3e99; /* FAB gradient end */
+  --color-primary-vivid: #6c63ff;
+  --color-primary-deep: #3b3e99;
   --color-secondary: #e2daff;
   --color-secondary-dark: #605a79;
   --color-tertiary: #a7e6ff;
   --color-tertiary-dark: #20667b;
-  --color-blush: #ffb6c1; /* iridescent orb spectrum */
+  --color-blush: #ffb6c1;
 
-  --color-canvas: #f8f9fe; /* AppColors.background */
+  --color-canvas: #f8f9fe;
   --color-surface: #ffffff;
-  --color-obsidian: #0c0a14; /* Dark canvas (web) */
+  --color-obsidian: #0c0a14;
 
   /* Text */
-  --color-ink: #191c1f; /* textPrimary */
-  --color-ink-soft: #767684; /* textSecondary */
-  --color-ink-muted: #9ea0ab; /* textLight */
+  --color-ink: #191c1f;
+  --color-ink-soft: #767684;
+  --color-ink-muted: #9ea0ab;
 
   /* Lines & glass */
   --color-divider: rgba(83, 88, 203, 0.055);
@@ -54,29 +55,29 @@
   --color-dass-extreme: #d32f2f;
 
   /* --- Type scale (mobile app scale, 1:1) --- */
-  --text-display: 1.75rem; /* 28px */
+  --text-display: 1.75rem;
   --text-display--line-height: 1.3;
   --text-display--font-weight: 700;
-  --text-headline: 1.375rem; /* 22px */
+  --text-headline: 1.375rem;
   --text-headline--line-height: 1.3;
   --text-headline--font-weight: 700;
-  --text-title-md: 1rem; /* 16px */
+  --text-title-md: 1rem;
   --text-title-md--line-height: 1.4;
   --text-title-md--font-weight: 600;
-  --text-body-lg: 0.9375rem; /* 15px */
+  --text-body-lg: 0.9375rem;
   --text-body-lg--line-height: 1.5;
-  --text-body-md: 0.875rem; /* 14px */
+  --text-body-md: 0.875rem;
   --text-body-md--line-height: 1.5;
-  --text-caption: 0.75rem; /* 12px */
+  --text-caption: 0.75rem;
   --text-caption--line-height: 1.4;
   --text-caption--letter-spacing: 0.04em;
   --text-caption--font-weight: 600;
-  --text-overline: 0.6875rem; /* 11px */
+  --text-overline: 0.6875rem;
   --text-overline--line-height: 1.2;
   --text-overline--letter-spacing: 0.12em;
   --text-overline--font-weight: 800;
 
-  /* Web-only scale-ups for landing hero / section titles (same weight & leading) */
+  /* Web-only scale-ups for landing hero / section titles */
   --text-hero: clamp(2.5rem, 1.8rem + 3vw, 4.25rem);
   --text-hero--line-height: 1.12;
   --text-hero--letter-spacing: -0.025em;
@@ -95,11 +96,11 @@
   --radius-pill: 9999px;
 
   /* --- Shadows & elevation --- */
-  --shadow-subtle: 0 2px 10px rgba(0, 0, 0, 0.05); /* L1 */
-  --shadow-glass: 0 10px 30px rgba(83, 88, 203, 0.08); /* L2 */
-  --shadow-btn: 0 4px 14px rgba(83, 88, 203, 0.3); /* L3 */
-  --shadow-nav: 0 8px 25px rgba(83, 88, 203, 0.12), 0 2px 10px rgba(0, 0, 0, 0.05); /* L4 */
-  --shadow-fab: 0 6px 20px rgba(83, 88, 203, 0.45); /* L5 */
+  --shadow-subtle: 0 2px 10px rgba(0, 0, 0, 0.05);
+  --shadow-glass: 0 10px 30px rgba(83, 88, 203, 0.08);
+  --shadow-btn: 0 4px 14px rgba(83, 88, 203, 0.3);
+  --shadow-nav: 0 8px 25px rgba(83, 88, 203, 0.12), 0 2px 10px rgba(0, 0, 0, 0.05);
+  --shadow-fab: 0 6px 20px rgba(83, 88, 203, 0.45);
   --shadow-halo: 0 0 36px rgba(199, 210, 254, 0.4), 0 0 28px rgba(255, 209, 220, 0.3);
 
   /* --- Motion --- */
@@ -225,38 +226,6 @@
 }
 
 /* ==========================================================================
-   Custom Scrollbar (Slim & Calming — ekyamuhammad.com style with EVA palette)
-   ========================================================================== */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: #b8bfff var(--color-canvas);
-}
-
-::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-canvas);
-}
-
-::-webkit-scrollbar-thumb {
-  background: #b8bfff;
-  border-radius: 9999px;
-  transition: background-color 0.25s ease;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary-light);
-}
-
-::-webkit-scrollbar-thumb:active {
-  background: var(--color-primary);
-}
-
-
-/* ==========================================================================
    Components & utilities
    ========================================================================== */
 @utility glass {
@@ -290,14 +259,10 @@ html {
   color: transparent;
 }
 
-/* Staggered entrance (design-token: 320ms, base 60ms, +40ms / item).
-   Usage: className="animate-enter" style={{ '--i': n }} */
 .animate-enter {
   animation-delay: calc(60ms + var(--i, 0) * 40ms);
 }
 
-/* Scroll reveal — progressive enhancement via scroll-driven animations.
-   Purely decorative, so unsupported browsers simply show static content. */
 @media (prefers-reduced-motion: no-preference) {
   @supports ((animation-timeline: view()) and (animation-range: entry)) {
     @keyframes reveal-up {
@@ -318,7 +283,7 @@ html {
   }
 }
 
-  @media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
@@ -327,140 +292,3 @@ html {
     transition-duration: 0.01ms !important;
   }
 }
-
-/* ==========================================================================
-   Lenis Smooth Scroll
-   ========================================================================== */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-}
-
-/* ==========================================================================
-   Custom Cursor (ekyamuhammad.com Dot-to-Pill Morphing adapted for EVA)
-   ========================================================================== */
-@media (pointer: fine) and (hover: hover) {
-  html.has-custom-cursor,
-  html.has-custom-cursor body,
-  html.has-custom-cursor a,
-  html.has-custom-cursor button,
-  html.has-custom-cursor [role='button'],
-  html.has-custom-cursor [data-cursor] {
-    cursor: none !important;
-  }
-
-  /* Preserve native text caret on form fields for user comfort */
-  html.has-custom-cursor input,
-  html.has-custom-cursor textarea,
-  html.has-custom-cursor select {
-    cursor: text !important;
-  }
-}
-
-.custom-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  will-change: transform;
-}
-
-.custom-cursor.is-active {
-  opacity: 1;
-}
-
-.cursor-pill {
-  min-width: 12px;
-  min-height: 12px;
-  height: 12px;
-  background-color: var(--color-primary);
-  border-radius: 9999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  box-shadow: 0 2px 10px rgba(83, 88, 203, 0.32);
-  transition:
-    width 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
-    height 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
-    padding 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
-    border-radius 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
-    background-color 0.28s ease,
-    box-shadow 0.28s ease,
-    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-    opacity 0.25s ease;
-  overflow: hidden;
-}
-
-.cursor-label {
-  font-family: var(--font-sans);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #ffffff;
-  text-transform: uppercase;
-  white-space: nowrap;
-  opacity: 0;
-  transform: scale(0.6);
-  transition:
-    opacity 0.22s ease 0.04s,
-    transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) 0.04s,
-    color 0.25s ease;
-  pointer-events: none;
-}
-
-.custom-cursor.has-label .cursor-pill {
-  height: 28px;
-  padding: 6px 15px;
-  border-radius: 20px;
-  box-shadow: 0 6px 18px rgba(83, 88, 203, 0.42);
-}
-
-.custom-cursor.has-label .cursor-label {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.custom-cursor.is-pressed .cursor-pill {
-  transform: scale(0.86);
-}
-
-.custom-cursor.is-text-input .cursor-pill {
-  transform: scale(0);
-  opacity: 0;
-}
-
-/* Adaptive light cursor when hovering dark sections (e.g. Early Access bg-obsidian) */
-.custom-cursor.is-on-dark .cursor-pill {
-  background-color: #ffffff;
-  box-shadow:
-    0 4px 18px rgba(139, 147, 255, 0.45),
-    0 0 0 1.5px rgba(232, 233, 255, 0.5);
-}
-
-.custom-cursor.is-on-dark .cursor-label {
-  color: var(--color-primary-deep);
-}
-

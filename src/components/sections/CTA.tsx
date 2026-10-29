@@ -2,6 +2,7 @@ import { CheckCircle2, Lock, Mail, Send, Sparkles, X } from 'lucide-react'
 import { useEffect, useState, type FormEvent } from 'react'
 import { Button, Container, Input, LunaOrb } from '@/components/ui'
 import { waitlist } from '@/content/landing'
+import { addWaitlistEntry } from '@/lib/portalStore'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PHONE_RE = /^(\+62|62|0)8[0-9]{7,12}$/
@@ -36,7 +37,7 @@ export function CTA() {
       setStatus('invalid')
       return
     }
-    // TODO: connect to waitlist API (e.g. Supabase) when backend is ready.
+    addWaitlistEntry(value.trim(), partnerTopic)
     setStatus('success')
   }
 
