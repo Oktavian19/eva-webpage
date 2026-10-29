@@ -1,8 +1,21 @@
+import { lazy, Suspense } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import { RootLayout } from '@/layouts/RootLayout'
 import { LandingPage } from '@/pages/LandingPage'
-import { LoginPage } from '@/pages/LoginPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
+
+const LoginPage = lazy(() =>
+  import('@/pages/LoginPage').then((m) => ({ default: m.LoginPage })),
+)
+const PartnerApplyPage = lazy(() =>
+  import('@/pages/PartnerApplyPage').then((m) => ({ default: m.PartnerApplyPage })),
+)
+const AdminDashboardPage = lazy(() =>
+  import('@/pages/AdminDashboardPage').then((m) => ({ default: m.AdminDashboardPage })),
+)
+const PartnerDashboardPage = lazy(() =>
+  import('@/pages/PartnerDashboardPage').then((m) => ({ default: m.PartnerDashboardPage })),
+)
 
 const router = createBrowserRouter([
   {
@@ -21,7 +34,35 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <LoginPage />,
+    element: (
+      <Suspense fallback={<div className="min-h-screen bg-[#F8F9FE]" />}>
+        <LoginPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/pengajuan-mitra',
+    element: (
+      <Suspense fallback={<div className="min-h-screen bg-[#F8F9FE]" />}>
+        <PartnerApplyPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/admin',
+    element: (
+      <Suspense fallback={<div className="min-h-screen bg-[#F8F9FE]" />}>
+        <AdminDashboardPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/mitra',
+    element: (
+      <Suspense fallback={<div className="min-h-screen bg-[#F8F9FE]" />}>
+        <PartnerDashboardPage />
+      </Suspense>
+    ),
   },
 ])
 

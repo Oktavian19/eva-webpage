@@ -61,6 +61,15 @@ export function Footer() {
                   Masuk Portal
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/pengajuan-mitra"
+                  data-cursor="MITRA"
+                  className="text-body-md text-ink-soft transition-colors duration-[250ms] hover:text-primary"
+                >
+                  Pengajuan Mitra Faskes
+                </Link>
+              </li>
             </ul>
           </nav>
 
