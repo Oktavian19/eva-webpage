@@ -1,4 +1,5 @@
 import { ArrowUpRight, GraduationCap, Heart, PhoneCall, Stethoscope } from 'lucide-react'
+import { Link } from 'react-router'
 import { Button, Container, Logo } from '@/components/ui'
 import { crisisHotline, navLinks, partnerCtas } from '@/content/landing'
 
@@ -51,6 +52,15 @@ export function Footer() {
                   </a>
                 </li>
               ))}
+              <li>
+                <Link
+                  to="/login"
+                  data-cursor="MASUK"
+                  className="text-body-md text-ink-soft transition-colors duration-[250ms] hover:text-primary"
+                >
+                  Masuk Portal
+                </Link>
+              </li>
             </ul>
           </nav>
 
