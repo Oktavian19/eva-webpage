@@ -52,6 +52,7 @@ export interface PsychologistCertificate {
   fileName: string
   fileSize: string
   verified: boolean
+  imageUrl?: string
 }
 
 export interface Psychologist {

@@ -1,10 +1,12 @@
 import {
   Building2,
+  ChevronDown,
   Globe,
   LayoutDashboard,
   Smartphone,
   Stethoscope,
 } from 'lucide-react'
+import { useState } from 'react'
 import { cn } from '@/lib/cn'
 
 export type AdminModule =
@@ -38,158 +40,163 @@ export function AdminSidebar({
   counts: AdminSummaryCounts
   onSelectModule: (mod: AdminModule) => void
 }) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   const totalAttention =
     counts.pendingMandiri +
     counts.pendingPartners +
     counts.crisisUsers +
     counts.unassignedRefs
 
+  const navItems = [
+    {
+      id: 'dashboard' as const,
+      label: 'Dashboard Utama',
+      icon: LayoutDashboard,
+      badge: totalAttention,
+      badgeColor: 'bg-[#EEF0FF] text-primary',
+    },
+    {
+      id: 'psychologists' as const,
+      label: 'Psikolog Mandiri & Faskes',
+      icon: Stethoscope,
+      badge: counts.pendingMandiri,
+      badgeColor: 'bg-[#FEF3C7] text-[#92400E]',
+    },
+    {
+      id: 'partners' as const,
+      label: 'Verifikasi Mitra Faskes',
+      icon: Building2,
+      badge: counts.pendingPartners,
+      badgeColor: 'bg-[#FEF3C7] text-[#92400E]',
+    },
+    {
+      id: 'users_referrals' as const,
+      label: 'User General & Rujukan',
+      icon: Smartphone,
+      badge: counts.crisisUsers + counts.unassignedRefs,
+      badgeColor: 'bg-[#FEE2E2] text-[#991B1B]',
+    },
+    {
+      id: 'content_config' as const,
+      label: 'Konten Mobile & Website',
+      icon: Globe,
+      badge: counts.newWaitlist,
+      badgeColor: 'bg-[#EEF0FF] text-primary',
+    },
+  ]
+
+  const currentItem = navItems.find((item) => item.id === activeModule) ?? navItems[0]
+  const CurrentIcon = currentItem.icon
+
   return (
-    <aside className="w-full shrink-0 rounded-[12px] border border-[#E2E8F0] bg-white p-3.5 lg:sticky lg:top-22 lg:w-64">
-      <p className="px-2.5 text-[11px] font-bold tracking-wider text-ink-muted uppercase">
-        Menu Ekosistem EVA
-      </p>
-      <nav className="mt-2 grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-1">
+    <>
+      {/* 1. Mobile Module Dropdown (Layar < lg, Hemat Ruang) */}
+      <div className="relative w-full lg:hidden">
         <button
           type="button"
-          onClick={() => onSelectModule('dashboard')}
-          className={cn(
-            'flex w-full cursor-pointer items-center justify-between rounded-[8px] px-3 py-2.5 text-left text-xs font-semibold transition-colors',
-            activeModule === 'dashboard'
-              ? 'bg-primary text-white'
-              : 'text-ink-soft hover:bg-[#F8FAFC] hover:text-ink',
-          )}
+          onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          className="flex h-11 w-full cursor-pointer items-center justify-between rounded-[12px] border border-[#CBD5E1] bg-white px-3.5 shadow-2xs transition-colors hover:border-primary/50"
         >
-          <span className="inline-flex items-center gap-2.5">
-            <LayoutDashboard className="size-4 shrink-0" />
-            <span>Dashboard Utama</span>
-          </span>
-          {totalAttention > 0 && (
-            <span
-              className={cn(
-                'rounded-[5px] px-1.5 py-0.5 text-[10px] font-bold',
-                activeModule === 'dashboard'
-                  ? 'bg-white text-primary'
-                  : 'bg-[#EEF0FF] text-primary',
-              )}
-            >
-              {totalAttention}
+          <div className="flex items-center gap-2.5 min-w-0">
+            <span className="flex size-7 shrink-0 items-center justify-center rounded-[8px] bg-primary/10 text-primary">
+              <CurrentIcon className="size-4" />
             </span>
-          )}
+            <span className="truncate text-xs font-bold text-ink">
+              {currentItem.label}
+            </span>
+            {currentItem.badge > 0 && (
+              <span className={cn('shrink-0 rounded-[5px] px-1.5 py-0.5 text-[10px] font-bold', currentItem.badgeColor)}>
+                {currentItem.badge}
+              </span>
+            )}
+          </div>
+          <ChevronDown className={cn('size-4 text-ink-muted transition-transform duration-200', isMobileMenuOpen && 'rotate-180')} />
         </button>
 
-        <button
-          type="button"
-          onClick={() => onSelectModule('psychologists')}
-          className={cn(
-            'flex w-full cursor-pointer items-center justify-between rounded-[8px] px-3 py-2.5 text-left text-xs font-semibold transition-colors',
-            activeModule === 'psychologists'
-              ? 'bg-primary text-white'
-              : 'text-ink-soft hover:bg-[#F8FAFC] hover:text-ink',
-          )}
-        >
-          <span className="inline-flex items-center gap-2.5">
-            <Stethoscope className="size-4 shrink-0" />
-            <span>Psikolog Mandiri &amp; Faskes</span>
-          </span>
-          {counts.pendingMandiri > 0 && (
-            <span
-              className={cn(
-                'rounded-[5px] px-1.5 py-0.5 text-[10px] font-bold',
-                activeModule === 'psychologists'
-                  ? 'bg-white text-primary'
-                  : 'bg-[#FEF3C7] text-[#92400E]',
-              )}
-            >
-              {counts.pendingMandiri}
-            </span>
-          )}
-        </button>
+        {/* Dropdown Menu Popover */}
+        {isMobileMenuOpen && (
+          <div className="absolute top-12 left-0 z-40 w-full rounded-[12px] border border-[#E2E8F0] bg-white p-2 shadow-xl animate-in fade-in zoom-in-95 duration-150">
+            <p className="px-2 py-1 text-[10px] font-bold tracking-wider text-ink-muted uppercase">
+              Pilih Modul Admin
+            </p>
+            <div className="mt-1 space-y-1">
+              {navItems.map((item) => {
+                const Icon = item.icon
+                const isActive = item.id === activeModule
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => {
+                      onSelectModule(item.id)
+                      setIsMobileMenuOpen(false)
+                    }}
+                    className={cn(
+                      'flex w-full cursor-pointer items-center justify-between rounded-[8px] px-3 py-2 text-xs font-semibold transition-colors',
+                      isActive ? 'bg-primary text-white' : 'text-ink-soft hover:bg-[#F8FAFC] hover:text-ink',
+                    )}
+                  >
+                    <span className="flex items-center gap-2">
+                      <Icon className="size-4 shrink-0" />
+                      <span>{item.label}</span>
+                    </span>
+                    {item.badge > 0 && (
+                      <span
+                        className={cn(
+                          'rounded-[5px] px-1.5 py-0.5 text-[10px] font-bold',
+                          isActive ? 'bg-white text-primary' : item.badgeColor,
+                        )}
+                      >
+                        {item.badge}
+                      </span>
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
+      </div>
 
-        <button
-          type="button"
-          onClick={() => onSelectModule('partners')}
-          className={cn(
-            'flex w-full cursor-pointer items-center justify-between rounded-[8px] px-3 py-2.5 text-left text-xs font-semibold transition-colors',
-            activeModule === 'partners'
-              ? 'bg-primary text-white'
-              : 'text-ink-soft hover:bg-[#F8FAFC] hover:text-ink',
-          )}
-        >
-          <span className="inline-flex items-center gap-2.5">
-            <Building2 className="size-4 shrink-0" />
-            <span>Verifikasi Mitra Faskes</span>
-          </span>
-          {counts.pendingPartners > 0 && (
-            <span
-              className={cn(
-                'rounded-[5px] px-1.5 py-0.5 text-[10px] font-bold',
-                activeModule === 'partners'
-                  ? 'bg-white text-primary'
-                  : 'bg-[#FEF3C7] text-[#92400E]',
-              )}
-            >
-              {counts.pendingPartners}
-            </span>
-          )}
-        </button>
-
-        <button
-          type="button"
-          onClick={() => onSelectModule('users_referrals')}
-          className={cn(
-            'flex w-full cursor-pointer items-center justify-between rounded-[8px] px-3 py-2.5 text-left text-xs font-semibold transition-colors',
-            activeModule === 'users_referrals'
-              ? 'bg-primary text-white'
-              : 'text-ink-soft hover:bg-[#F8FAFC] hover:text-ink',
-          )}
-        >
-          <span className="inline-flex items-center gap-2.5">
-            <Smartphone className="size-4 shrink-0" />
-            <span>User General &amp; Rujukan</span>
-          </span>
-          {(counts.crisisUsers > 0 || counts.unassignedRefs > 0) && (
-            <span
-              className={cn(
-                'rounded-[5px] px-1.5 py-0.5 text-[10px] font-bold',
-                activeModule === 'users_referrals'
-                  ? 'bg-white text-primary'
-                  : 'bg-[#FEE2E2] text-[#991B1B]',
-              )}
-            >
-              {counts.crisisUsers + counts.unassignedRefs}
-            </span>
-          )}
-        </button>
-
-        <button
-          type="button"
-          onClick={() => onSelectModule('content_config')}
-          className={cn(
-            'flex w-full cursor-pointer items-center justify-between rounded-[8px] px-3 py-2.5 text-left text-xs font-semibold transition-colors',
-            activeModule === 'content_config'
-              ? 'bg-primary text-white'
-              : 'text-ink-soft hover:bg-[#F8FAFC] hover:text-ink',
-          )}
-        >
-          <span className="inline-flex items-center gap-2.5">
-            <Globe className="size-4 shrink-0" />
-            <span>Konten Mobile &amp; Website</span>
-          </span>
-          {counts.newWaitlist > 0 && (
-            <span
-              className={cn(
-                'rounded-[5px] px-1.5 py-0.5 text-[10px] font-bold',
-                activeModule === 'content_config'
-                  ? 'bg-white text-primary'
-                  : 'bg-[#EEF0FF] text-primary',
-              )}
-            >
-              {counts.newWaitlist}
-            </span>
-          )}
-        </button>
-      </nav>
-    </aside>
+      {/* 2. Desktop Sticky Sidebar (Layar >= lg) */}
+      <aside className="hidden w-64 shrink-0 rounded-[14px] border border-[#E2E8F0] bg-white p-3.5 lg:sticky lg:top-22 lg:block">
+        <p className="px-2.5 text-[11px] font-bold tracking-wider text-ink-muted uppercase">
+          Menu Ekosistem EVA
+        </p>
+        <nav className="mt-2.5 space-y-1">
+          {navItems.map((item) => {
+            const Icon = item.icon
+            const isActive = item.id === activeModule
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => onSelectModule(item.id)}
+                className={cn(
+                  'flex w-full cursor-pointer items-center justify-between rounded-[8px] px-3 py-2.5 text-left text-xs font-semibold transition-colors',
+                  isActive ? 'bg-primary text-white shadow-2xs' : 'text-ink-soft hover:bg-[#F8FAFC] hover:text-ink',
+                )}
+              >
+                <span className="inline-flex items-center gap-2.5">
+                  <Icon className="size-4 shrink-0" />
+                  <span>{item.label}</span>
+                </span>
+                {item.badge > 0 && (
+                  <span
+                    className={cn(
+                      'rounded-[5px] px-1.5 py-0.5 text-[10px] font-bold',
+                      isActive ? 'bg-white text-primary' : item.badgeColor,
+                    )}
+                  >
+                    {item.badge}
+                  </span>
+                )}
+              </button>
+            )
+          })}
+        </nav>
+      </aside>
+    </>
   )
 }

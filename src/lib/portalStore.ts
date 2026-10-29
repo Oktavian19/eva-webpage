@@ -3,6 +3,7 @@ export { ADMIN_ACCOUNT, CLINICAL_SPECIALIZATIONS, FACILITY_TYPES } from '@/const
 export {
   getPortalSession,
   loadPortalDb,
+  resetPortalDbToDefault,
   setPortalSession,
 } from '@/services/portal/storage'
 export {

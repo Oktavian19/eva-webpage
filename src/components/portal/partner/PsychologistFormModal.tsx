@@ -1,6 +1,7 @@
 import { X } from 'lucide-react'
 import type { FormEvent } from 'react'
 import { CLINICAL_SPECIALIZATIONS, FORMAL_INPUT_CLASS } from '@/constants/portal'
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock'
 import { cn } from '@/lib/cn'
 import type { Psychologist, PsychologistStatus } from '@/types/portal'
 
@@ -51,6 +52,8 @@ export function PsychologistFormModal({
   onYearsExperienceChange,
   onEducationChange,
 }: PsychologistFormModalProps) {
+  useBodyScrollLock(isOpen)
+
   if (!isOpen) return null
 
   return (

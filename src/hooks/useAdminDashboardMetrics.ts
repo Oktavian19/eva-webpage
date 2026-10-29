@@ -14,7 +14,7 @@ import {
   BASELINE_DASS,
   BASELINE_USERS,
   buildHistorySeed,
-} from '@/services/portal/dashboardHistorySeed'
+} from '@/demo/data/dashboardHistorySeed'
 
 export function useAdminDashboardMetrics(db: PortalDatabase, range: DashboardRange) {
   return useMemo(() => {

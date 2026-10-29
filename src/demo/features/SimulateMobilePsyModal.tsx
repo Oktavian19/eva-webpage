@@ -1,11 +1,10 @@
 import { Users, X } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
+import { simulateMobilePsychologistSubmission } from './simulateSubmission'
 import { CLINICAL_SPECIALIZATIONS } from '@/constants/portal'
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock'
 import { cn } from '@/lib/cn'
-import {
-  simulateMobilePsychologistSubmission,
-  type Psychologist,
-} from '@/lib/portalStore'
+import type { Psychologist } from '@/types/portal'
 
 interface SimulateMobilePsyModalProps {
   isOpen: boolean
@@ -18,6 +17,8 @@ export function SimulateMobilePsyModal({
   onClose,
   onCreated,
 }: SimulateMobilePsyModalProps) {
+  useBodyScrollLock(isOpen)
+
   const [simFullName, setSimFullName] = useState('')
   const [simSipp, setSimSipp] = useState('')
   const [simStr, setSimStr] = useState('')
@@ -85,7 +86,8 @@ export function SimulateMobilePsyModal({
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex size-8 cursor-pointer items-center justify-center rounded-[8px] border border-[#CBD5E1] text-ink-muted"
+            aria-label="Tutup modal simulasi"
+            className="inline-flex size-8 cursor-pointer items-center justify-center rounded-[8px] border border-[#CBD5E1] text-ink-muted hover:bg-slate-100"
           >
             <X className="size-4" />
           </button>
@@ -100,9 +102,7 @@ export function SimulateMobilePsyModal({
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="sm:col-span-2">
-              <label className="block font-semibold text-ink">
-                Nama Lengkap &amp; Gelar Profesi *
-              </label>
+              <label className="block font-semibold text-ink">Nama Lengkap &amp; Gelar Profesi *</label>
               <input
                 type="text"
                 value={simFullName}
@@ -113,9 +113,7 @@ export function SimulateMobilePsyModal({
             </div>
 
             <div>
-              <label className="block font-semibold text-ink">
-                Nomor SIPP (Otomatis Kapital) *
-              </label>
+              <label className="block font-semibold text-ink">Nomor SIPP (Otomatis Kapital) *</label>
               <input
                 type="text"
                 value={simSipp}
@@ -126,9 +124,7 @@ export function SimulateMobilePsyModal({
             </div>
 
             <div>
-              <label className="block font-semibold text-ink">
-                Nomor STR HIMPSI / IPK (Kapital) *
-              </label>
+              <label className="block font-semibold text-ink">Nomor STR HIMPSI / IPK (Kapital) *</label>
               <input
                 type="text"
                 value={simStr}
@@ -139,9 +135,7 @@ export function SimulateMobilePsyModal({
             </div>
 
             <div>
-              <label className="block font-semibold text-ink">
-                Kota Domisili Praktik (Kapital) *
-              </label>
+              <label className="block font-semibold text-ink">Kota Domisili Praktik (Kapital) *</label>
               <input
                 type="text"
                 value={simCity}
@@ -162,9 +156,7 @@ export function SimulateMobilePsyModal({
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block font-semibold text-ink">
-                Asal Universitas Magister Profesi
-              </label>
+              <label className="block font-semibold text-ink">Asal Universitas Magister Profesi</label>
               <input
                 type="text"
                 value={simEducation}

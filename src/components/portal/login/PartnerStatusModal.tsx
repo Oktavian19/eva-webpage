@@ -1,5 +1,6 @@
 import { AlertTriangle, Clock, RefreshCw, X } from 'lucide-react'
 import { FORMAL_SECONDARY_BTN_CLASS } from '@/constants/portal'
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock'
 import { cn } from '@/lib/cn'
 import type { PartnerAccount } from '@/types/portal'
 
@@ -14,6 +15,8 @@ export function PartnerStatusModal({
   onClose,
   onRevise,
 }: PartnerStatusModalProps) {
+  useBodyScrollLock(Boolean(partner))
+
   if (!partner) return null
 
   return (

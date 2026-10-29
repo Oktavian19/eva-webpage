@@ -10,6 +10,7 @@ interface PortalTopbarProps {
   subtitle: string
   onLogout: () => void
   maxWidthClass?: string
+  extraActions?: ReactNode
 }
 
 export function PortalTopbar({
@@ -18,6 +19,7 @@ export function PortalTopbar({
   subtitle,
   onLogout,
   maxWidthClass = 'max-w-7xl',
+  extraActions,
 }: PortalTopbarProps) {
   return (
     <header className="sticky top-0 z-30 border-b border-[#E2E8F0] bg-white">
@@ -38,7 +40,8 @@ export function PortalTopbar({
           </span>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          {extraActions}
           <div className="hidden text-right sm:block">
             <p className="text-xs font-semibold text-ink">{title}</p>
             <p className="text-[11px] text-ink-muted">{subtitle}</p>

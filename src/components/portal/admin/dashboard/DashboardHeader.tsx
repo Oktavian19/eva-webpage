@@ -28,17 +28,17 @@ export function DashboardHeader({ summary, onSelectModule }: DashboardHeaderProp
 
   return (
     <div className="space-y-4">
-      {/* Greeting and Date Header (clean, without heavy border card) */}
-      <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
-        <div>
-          <h1 className="text-2xl font-bold tracking-[-0.02em] text-ink">
+      {/* Greeting and Date Header (clean, responsive, standardized) */}
+      <div className="flex flex-col justify-between gap-1.5 sm:flex-row sm:items-baseline">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-xl font-bold tracking-[-0.02em] text-ink sm:text-2xl">
             {greeting}, <span className="text-primary">Super Admin EVA</span>
           </h1>
-          <p className="text-xs text-ink-muted">
+          <p className="mt-0.5 text-xs text-ink-muted">
             Pusat komando ekosistem kesehatan mental: Web, App Psikolog, &amp; App Pengguna.
           </p>
         </div>
-        <div className="text-xs font-medium text-ink-muted sm:text-right">
+        <div className="shrink-0 text-xs font-medium text-ink-muted sm:text-right">
           {dateStr}
         </div>
       </div>

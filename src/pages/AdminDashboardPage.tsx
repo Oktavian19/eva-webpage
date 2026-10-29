@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { ShieldCheck } from 'lucide-react'
+import { RotateCcw, ShieldCheck } from 'lucide-react'
+import { DEMO_CONFIG } from '@/config/demoConfig'
 import { cn } from '@/lib/cn'
-import { setPortalSession, usePortalDb } from '@/lib/portalStore'
+import { resetPortalDbToDefault, setPortalSession, usePortalDb } from '@/lib/portalStore'
 import {
   PortalFeedbackBanner,
   PortalTopbar,
@@ -75,21 +76,42 @@ export function AdminDashboardPage() {
     navigate('/login')
   }
 
+  const handleResetDemo = () => {
+    if (window.confirm('Reset semua data demo ke kondisi awal? Perubahan lokal pada database demo akan dikembalikan.')) {
+      resetPortalDbToDefault()
+      setFeedbackBanner('Semua data demo telah berhasil direset ke kondisi awal.')
+    }
+  }
+
   return (
     <div className="min-h-dvh bg-[#F8FAFC] text-ink">
       <PortalTopbar
+        maxWidthClass="max-w-none"
         badgeLabel={
           <>
             <ShieldCheck className="size-3.5 text-primary" />
-            <span>Pusat Kontrol Ekosistem Admin</span>
+            <span className="hidden sm:inline">Pusat Kontrol Ekosistem Admin</span>
           </>
         }
         title="Super Admin EVA"
         subtitle={session?.email ?? 'admin@eva.id'}
         onLogout={handleLogout}
+        extraActions={
+          DEMO_CONFIG.showResetDemoButton ? (
+            <button
+              type="button"
+              onClick={handleResetDemo}
+              title="Kembalikan database demo ke kondisi awal"
+              className="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-[8px] border border-[#CBD5E1] bg-white px-2.5 text-xs font-semibold text-ink-muted transition-colors hover:border-amber-400 hover:text-ink"
+            >
+              <RotateCcw className="size-3.5" />
+              <span className="hidden md:inline">Reset Demo</span>
+            </button>
+          ) : undefined
+        }
       />
 
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:flex-row lg:items-start lg:px-8">
+      <div className="flex w-full flex-col gap-6 px-4 py-6 sm:px-6 lg:flex-row lg:items-start lg:px-8">
         <AdminSidebar
           activeModule={activeModule}
           counts={counts}
@@ -133,11 +155,11 @@ export function AdminDashboardPage() {
             <div>
               <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                  <h1 className="text-xl font-bold tracking-[-0.02em] text-ink">
-                    Konten Aplikasi Mobile & Operasional Website
+                  <h1 className="text-xl font-bold tracking-[-0.02em] text-ink sm:text-2xl">
+                    Konten Aplikasi Mobile &amp; Operasional Website
                   </h1>
-                  <p className="mt-1 text-sm text-ink-muted">
-                    Kelola katalog Misi Koping Harian, konfigurasi Hotline Krisis SafetyNet, serta pendaftar Waitlist & FAQ Website.
+                  <p className="mt-0.5 text-xs text-ink-muted">
+                    Kelola katalog Misi Koping Harian, konfigurasi Hotline Krisis SafetyNet, serta pendaftar Waitlist &amp; FAQ Website.
                   </p>
                 </div>
 

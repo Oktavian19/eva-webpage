@@ -1,9 +1,7 @@
-import { INITIAL_PARTNERS } from './initialPartnerData'
+import { generateCertificateSvgUri } from './certificateSvgTemplates'
 import type { Psychologist } from '@/types/portal'
 
-export { INITIAL_PARTNERS }
-
-export const INITIAL_PSYCHOLOGISTS: Psychologist[] = [
+const RAW_PSYCHOLOGISTS: Psychologist[] = [
   {
     id: 'psy-mandiri-1',
     partnerId: null,
@@ -213,63 +211,51 @@ export const INITIAL_PSYCHOLOGISTS: Psychologist[] = [
     ],
   },
   {
-    id: 'psy-1',
-    partnerId: 'partner-sardjito',
-    practiceType: 'faskes',
-    verificationStatus: 'approved',
-    fullName: 'Ayu Kartika Sari, M.Psi., Psikolog',
-    sippNumber: '20190412-2024-02-0814',
+    id: 'psy-1', partnerId: 'partner-sardjito', practiceType: 'faskes', verificationStatus: 'approved',
+    fullName: 'Ayu Kartika Sari, M.Psi., Psikolog', sippNumber: '20190412-2024-02-0814',
     specializations: ['Kecemasan & Panik', 'Remaja & Mahasiswa'],
-    practiceSchedule: 'Senin, Rabu, Jumat (08.30 – 15.00 WIB)',
-    status: 'active',
-    weeklyQuota: 12,
-    yearsExperience: 7,
-    education: 'Magister Profesi Psikologi Klinis UGM',
-    city: 'YOGYAKARTA',
+    practiceSchedule: 'Senin, Rabu, Jumat (08.30 – 15.00 WIB)', status: 'active',
+    weeklyQuota: 12, yearsExperience: 7, education: 'Magister Profesi Psikologi Klinis UGM', city: 'YOGYAKARTA',
   },
   {
-    id: 'psy-2',
-    partnerId: 'partner-sardjito',
-    practiceType: 'faskes',
-    verificationStatus: 'approved',
-    fullName: 'Dimas Prasetyo, M.Psi., Psikolog',
-    sippNumber: '20200819-2025-01-1142',
+    id: 'psy-2', partnerId: 'partner-sardjito', practiceType: 'faskes', verificationStatus: 'approved',
+    fullName: 'Dimas Prasetyo, M.Psi., Psikolog', sippNumber: '20200819-2025-01-1142',
     specializations: ['Depresi & Mood', 'Regulasi Emosi & Stres Akademik'],
-    practiceSchedule: 'Selasa, Kamis, Sabtu (09.00 – 15.30 WIB)',
-    status: 'active',
-    weeklyQuota: 10,
-    yearsExperience: 6,
-    education: 'Magister Profesi Psikologi Klinis UI',
-    city: 'YOGYAKARTA',
+    practiceSchedule: 'Selasa, Kamis, Sabtu (09.00 – 15.30 WIB)', status: 'active',
+    weeklyQuota: 10, yearsExperience: 6, education: 'Magister Profesi Psikologi Klinis UI', city: 'YOGYAKARTA',
   },
   {
-    id: 'psy-3',
-    partnerId: 'partner-sardjito',
-    practiceType: 'faskes',
-    verificationStatus: 'approved',
-    fullName: 'dr. Clara Shinta, M.Psi., Psikolog',
-    sippNumber: '20171103-2023-03-0419',
+    id: 'psy-3', partnerId: 'partner-sardjito', practiceType: 'faskes', verificationStatus: 'approved',
+    fullName: 'dr. Clara Shinta, M.Psi., Psikolog', sippNumber: '20171103-2023-03-0419',
     specializations: ['Trauma & Krisis', 'Relasi & Keluarga'],
-    practiceSchedule: 'Senin – Kamis (10.00 – 14.00 WIB)',
-    status: 'on_leave',
-    weeklyQuota: 8,
-    yearsExperience: 9,
-    education: 'Magister Profesi Psikologi Klinis Unpad',
-    city: 'YOGYAKARTA',
+    practiceSchedule: 'Senin – Kamis (10.00 – 14.00 WIB)', status: 'on_leave',
+    weeklyQuota: 8, yearsExperience: 9, education: 'Magister Profesi Psikologi Klinis Unpad', city: 'YOGYAKARTA',
   },
   {
-    id: 'psy-4',
-    partnerId: 'partner-pulih',
-    practiceType: 'faskes',
-    verificationStatus: 'approved',
-    fullName: 'Nadia Pramesti, M.Psi., Psikolog',
-    sippNumber: '20210214-2025-02-0931',
+    id: 'psy-4', partnerId: 'partner-pulih', practiceType: 'faskes', verificationStatus: 'approved',
+    fullName: 'Nadia Pramesti, M.Psi., Psikolog', sippNumber: '20210214-2025-02-0931',
     specializations: ['Kecemasan & Panik', 'Regulasi Emosi & Stres Akademik'],
-    practiceSchedule: 'Senin – Jumat (10.00 – 18.00 WIB)',
-    status: 'active',
-    weeklyQuota: 15,
-    yearsExperience: 5,
-    education: 'Magister Profesi Psikologi Klinis Unair',
-    city: 'JAKARTA SELATAN',
+    practiceSchedule: 'Senin – Jumat (10.00 – 18.00 WIB)', status: 'active',
+    weeklyQuota: 15, yearsExperience: 5, education: 'Magister Profesi Psikologi Klinis Unair', city: 'JAKARTA SELATAN',
   },
 ]
+
+export const INITIAL_PSYCHOLOGISTS: Psychologist[] = RAW_PSYCHOLOGISTS.map((psy) => {
+  if (!psy.documents) return psy
+  return {
+    ...psy,
+    documents: psy.documents.map((doc) => ({
+      ...doc,
+      imageUrl:
+        doc.imageUrl ||
+        generateCertificateSvgUri({
+          docType: doc.docType,
+          title: doc.title,
+          documentNumber: doc.documentNumber,
+          issuedBy: doc.issuedBy,
+          holderName: psy.fullName,
+          validUntil: doc.validUntil,
+        }),
+    })),
+  }
+})

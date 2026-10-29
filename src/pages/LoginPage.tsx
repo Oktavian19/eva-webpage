@@ -1,7 +1,6 @@
 import { ArrowLeft } from 'lucide-react'
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router'
-import { DemoAccountsMenu } from '@/components/portal/login/DemoAccountsMenu'
 import {
   LoginFormView,
   type LoginSubmitState,
@@ -9,7 +8,9 @@ import {
 } from '@/components/portal/login/LoginFormView'
 import { PartnerStatusModal } from '@/components/portal/login/PartnerStatusModal'
 import { LunaOrb } from '@/components/ui'
+import { DEMO_CONFIG } from '@/config/demoConfig'
 import { EMAIL_RE } from '@/constants/portal'
+import { DemoAccountsMenu } from '@/demo/features/DemoAccountsMenu'
 import { authenticateUser, usePortalDb, type PartnerAccount } from '@/lib/portalStore'
 
 export function LoginPage() {
@@ -190,13 +191,15 @@ export function LoginPage() {
         }}
       />
 
-      <DemoAccountsMenu
-        isOpen={demoMenuOpen}
-        partners={db.partners}
-        onToggleOpen={() => setDemoMenuOpen((v) => !v)}
-        onClose={() => setDemoMenuOpen(false)}
-        onSelectCredentials={fillDemoCredentials}
-      />
+      {DEMO_CONFIG.showDemoAccountsOnLogin && (
+        <DemoAccountsMenu
+          isOpen={demoMenuOpen}
+          partners={db.partners}
+          onToggleOpen={() => setDemoMenuOpen((v) => !v)}
+          onClose={() => setDemoMenuOpen(false)}
+          onSelectCredentials={fillDemoCredentials}
+        />
+      )}
 
       <footer className="mx-auto w-full max-w-5xl text-center text-xs text-ink-muted">
         © {year} EVA — Empathetic Vitality Assistant

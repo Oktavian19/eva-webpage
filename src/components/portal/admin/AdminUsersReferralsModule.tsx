@@ -40,10 +40,10 @@ export function AdminUsersReferralsModule({
     <div>
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-xl font-bold tracking-[-0.02em] text-ink">
-            Manajemen User General & Distribusi Rujukan DASS-21
+          <h1 className="text-xl font-bold tracking-[-0.02em] text-ink sm:text-2xl">
+            Manajemen User General &amp; Distribusi Rujukan DASS-21
           </h1>
-          <p className="mt-1 text-sm text-ink-muted">
+          <p className="mt-0.5 text-xs text-ink-muted">
             Pantau pengguna Aplikasi Mobile EVA, sinyal protokol krisis SafetyNet, dan arahkan rujukan pasien ke Faskes atau Psikolog Mandiri.
           </p>
         </div>

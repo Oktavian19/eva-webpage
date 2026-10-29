@@ -217,4 +217,3 @@ export const INITIAL_FAQS: FaqEntry[] = defaultFaqs.map((f) => ({
   answer: f.answer,
   isPublished: true,
 }))
-

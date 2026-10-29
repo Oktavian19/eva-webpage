@@ -56,10 +56,10 @@ export function AdminPartnersModule({ db, onFeedback }: AdminPartnersModuleProps
   return (
     <div>
       <div>
-        <h1 className="text-xl font-bold tracking-[-0.02em] text-ink">
-          Verifikasi & Manajemen Mitra Fasilitas Kesehatan
+        <h1 className="text-xl font-bold tracking-[-0.02em] text-ink sm:text-2xl">
+          Verifikasi &amp; Manajemen Mitra Fasilitas Kesehatan
         </h1>
-        <p className="mt-1 text-sm text-ink-muted">
+        <p className="mt-0.5 text-xs text-ink-muted">
           Tinjau dokumen izin operasional Rumah Sakit, Klinik, dan Biro Psikologi yang mendaftar melalui portal website.
         </p>
       </div>
