@@ -162,6 +162,16 @@
   }
 }
 
+/* Keyframes for Feature card progress bar */
+@keyframes feature-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 /* ==========================================================================
    Raw CSS custom properties (for non-Tailwind usage / inline styles)
    ========================================================================== */
@@ -187,7 +197,7 @@
    ========================================================================== */
 @layer base {
   html {
-    scroll-padding-top: calc(var(--nav-height) + 16px);
+    scroll-padding-top: calc(var(--nav-height) + 28px);
     -webkit-text-size-adjust: 100%;
   }
 

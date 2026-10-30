@@ -6,9 +6,9 @@ export function HowItWorks() {
     <section
       id="cara-kerja"
       aria-labelledby="cara-kerja-title"
-      className="relative overflow-hidden bg-canvas py-20 sm:py-28 border-t border-border-subtle/50"
+      className="relative isolate flex min-h-[100dvh] w-full flex-col justify-center overflow-hidden bg-canvas py-20 sm:py-24 lg:py-28 border-t border-border-subtle/50"
     >
-      <Container>
+      <Container className="flex flex-col justify-center my-auto">
         <SectionHeading
           id="cara-kerja-title"
           title="4 langkah kecil menuju hati yang lebih ringan"

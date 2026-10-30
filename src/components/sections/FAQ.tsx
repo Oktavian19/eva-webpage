@@ -22,9 +22,9 @@ export function FAQ() {
     <section
       id="faq"
       aria-labelledby="faq-title"
-      className="relative border-t border-border-subtle/50 bg-canvas py-20 sm:py-28"
+      className="relative isolate flex min-h-[100dvh] w-full flex-col justify-center overflow-hidden bg-canvas py-16 sm:py-20 lg:py-24 border-t border-border-subtle/50"
     >
-      <Container>
+      <Container className="flex flex-col justify-center my-auto">
         <SectionHeading
           id="faq-title"
           title={

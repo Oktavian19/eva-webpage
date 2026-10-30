@@ -42,9 +42,14 @@ export function CTA() {
   }
 
   return (
-    <section id="early-access" aria-labelledby="early-access-title" className="py-20 sm:py-28">
-      <Container>
+    <section
+      id="early-access"
+      aria-labelledby="early-access-title"
+      className="relative isolate flex min-h-[100dvh] w-full flex-col justify-center py-20 sm:py-24 lg:py-28"
+    >
+      <Container className="my-auto">
         <div
+          id="early-access-card"
           data-cursor-theme="dark"
           className="reveal relative isolate overflow-hidden rounded-[32px] border border-white/10 bg-obsidian px-6 py-14 sm:px-12 sm:py-20 lg:px-24 lg:py-24 shadow-2xl"
         >
@@ -101,7 +106,7 @@ export function CTA() {
               </div>
             ) : (
               <form onSubmit={onSubmit} noValidate className="mt-10 w-full max-w-2xl">
-                <div className="flex flex-col gap-3 rounded-[32px] border border-white/10 bg-white/5 p-2 backdrop-blur-md sm:flex-row sm:rounded-pill">
+                <div className="flex flex-col gap-3 rounded-[28px] border border-white/10 bg-white/5 p-2 backdrop-blur-md sm:flex-row sm:rounded-pill">
                   <label htmlFor="waitlist-contact" className="sr-only">
                     Email atau nomor WhatsApp
                   </label>
@@ -123,7 +128,7 @@ export function CTA() {
                       if (status === 'invalid') setStatus('idle')
                     }}
                     leftIcon={<Mail />}
-                    containerClassName="flex-1 border-transparent"
+                    containerClassName="h-[52px] w-full border-transparent sm:h-[54px] sm:w-auto sm:flex-1"
                   />
                   <Button
                     id="waitlist-submit"
@@ -131,6 +136,7 @@ export function CTA() {
                     data-cursor="GABUNG"
                     size="lg"
                     variant="light"
+                    className="h-[52px] w-full shrink-0 sm:h-[54px] sm:w-auto"
                     rightIcon={<Send />}
                   >
                     {waitlist.button}

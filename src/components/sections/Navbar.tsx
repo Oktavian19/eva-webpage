@@ -20,6 +20,43 @@ export function Navbar() {
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({})
   const [pill, setPill] = useState<{ left: number; width: number } | null>(null)
 
+  // Universal centered smooth scroll handler for all sections
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault()
+    setOpen(false)
+
+    if (id === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      history.pushState(null, '', '#top')
+      return
+    }
+
+    const targetEl = document.getElementById(id)
+    if (!targetEl) return
+
+    const isDesktop = window.innerWidth >= 768
+    const navOffset = isDesktop ? 78 : 74
+
+    // Find main content block inside section (Container or Box Card)
+    const contentEl = (targetEl.querySelector('& > div, [id$="-card"]') || targetEl) as HTMLElement
+    const rect = contentEl.getBoundingClientRect()
+    const elementTop = rect.top + window.scrollY
+    const elementHeight = rect.height
+    const viewportHeight = window.innerHeight
+
+    // Center content block in viewport if it fits (desktop); otherwise anchor safely below navbar
+    const idealOffset = (viewportHeight - elementHeight) / 2
+    const safeOffset = Math.max(navOffset + 16, idealOffset)
+    const offsetPosition = Math.max(0, elementTop - safeOffset)
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth',
+    })
+
+    history.pushState(null, '', `#${id}`)
+  }
+
   useLayoutEffect(() => {
     const el = active ? linkRefs.current[active] : null
     setPill(el ? { left: el.offsetLeft, width: el.offsetWidth } : null)
@@ -53,6 +90,7 @@ export function Navbar() {
         >
           <a
             href="#top"
+            onClick={(e) => handleNavClick(e, 'top')}
             data-cursor="BERANDA"
             aria-label="EVA — kembali ke atas"
             className="shrink-0"
@@ -75,6 +113,7 @@ export function Navbar() {
                   linkRefs.current[l.id] = el
                 }}
                 href={`#${l.id}`}
+                onClick={(e) => handleNavClick(e, l.id)}
                 data-cursor="LIHAT"
                 aria-current={active === l.id ? 'true' : undefined}
                 className={cn(
@@ -99,6 +138,7 @@ export function Navbar() {
             <Button
               id="nav-cta"
               href="#early-access"
+              onClick={(e) => handleNavClick(e, 'early-access')}
               data-cursor="MULAI"
               size="sm"
               className="hidden sm:inline-flex"
@@ -132,7 +172,7 @@ export function Navbar() {
               <li key={l.id}>
                 <a
                   href={`#${l.id}`}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => handleNavClick(e, l.id)}
                   className={cn(
                     'flex items-center justify-between rounded-[16px] px-4 py-3.5 text-title-md transition-colors',
                     active === l.id ? 'bg-primary-container text-primary' : 'text-ink hover:bg-primary-container/50',
@@ -154,7 +194,13 @@ export function Navbar() {
               </Link>
             </li>
           </ul>
-          <Button href="#early-access" onClick={() => setOpen(false)} fullWidth size="lg" className="mt-2">
+          <Button
+            href="#early-access"
+            onClick={(e) => handleNavClick(e, 'early-access')}
+            fullWidth
+            size="lg"
+            className="mt-2"
+          >
             Coba EVA Sekarang — Gratis
           </Button>
         </div>

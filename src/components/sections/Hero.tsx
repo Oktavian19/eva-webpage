@@ -26,8 +26,9 @@ export function Hero() {
       {/* Unified container synchronized with Navbar and all content sections */}
       <Container className="flex flex-1 items-center">
         <div className="grid w-full items-center gap-12 lg:grid-cols-[1.12fr_0.88fr] lg:gap-12 xl:gap-16">
-          {/* Copy column */}
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+          {/* Copy column: Spans 100dvh on mobile with balanced proportional spacing */}
+          <div className="flex min-h-[calc(100dvh-5.5rem)] w-full flex-col justify-center py-6 sm:py-8 items-center text-center lg:min-h-0 lg:py-0 lg:items-start lg:text-left">
+            {/* Kicker */}
             <span
               className="animate-enter text-overline font-bold tracking-[0.14em] uppercase text-primary"
               style={stagger(0)}
@@ -35,79 +36,100 @@ export function Hero() {
               {hero.kicker}
             </span>
 
+            {/* Title: Tambah mt agar lebih lega dari kicker */}
             <h1
               id="hero-title"
-              className="mt-6 max-w-3xl xl:max-w-4xl 2xl:max-w-5xl animate-enter text-hero"
+              className="mt-6 max-w-3xl xl:max-w-4xl 2xl:max-w-5xl animate-enter text-hero sm:mt-8"
               style={stagger(1)}
             >
               {hero.titleLead} <span className="text-primary">{hero.titleAccent}</span>
             </h1>
 
+            {/* Subtitle */}
             <p
-              className="mt-6 max-w-2xl 2xl:max-w-3xl animate-enter text-body-lg text-ink-soft sm:text-[19px] sm:leading-[1.65]"
+              className="mt-3.5 max-w-2xl 2xl:max-w-3xl animate-enter text-body-lg text-ink-soft sm:mt-4 sm:text-[19px] sm:leading-[1.65]"
               style={stagger(2)}
             >
               {hero.subtitle}
             </p>
 
-            <div
-              className="mt-9 flex w-full animate-enter flex-col gap-3.5 sm:w-auto sm:flex-row"
-              style={stagger(3)}
-            >
-              <Button
-                id="hero-cta-primary"
-                href="#early-access"
-                data-cursor="MULAI"
-                variant="primary"
-                size="lg"
-                rightIcon={<ArrowRight />}
+            {/* CTA Buttons & Microcopy: Kurangi mt menjadi proporsional */}
+            <div className="mt-5 flex w-full flex-col items-center sm:mt-7 lg:items-start">
+              <div
+                className="flex w-full animate-enter flex-col gap-3 sm:w-auto sm:flex-row"
+                style={stagger(3)}
               >
-                {hero.primaryCta}
-              </Button>
-              <Button
-                id="hero-cta-apk"
-                href="#early-access"
-                data-cursor="UNDUH"
-                variant="secondary"
-                size="lg"
-                leftIcon={<Download />}
+                <Button
+                  id="hero-cta-primary"
+                  href="#early-access"
+                  data-cursor="MULAI"
+                  variant="primary"
+                  size="lg"
+                  rightIcon={<ArrowRight />}
+                >
+                  {hero.primaryCta}
+                </Button>
+                <Button
+                  id="hero-cta-apk"
+                  href="#early-access"
+                  data-cursor="UNDUH"
+                  variant="secondary"
+                  size="lg"
+                  leftIcon={<Download />}
+                >
+                  {hero.secondaryCta}
+                </Button>
+              </div>
+
+              <ul
+                className="mt-3.5 flex animate-enter flex-wrap justify-center gap-x-4 gap-y-2 text-caption text-ink-muted sm:mt-4 lg:justify-start"
+                style={stagger(4)}
               >
-                {hero.secondaryCta}
-              </Button>
+                {hero.microcopy.map((m, i) => (
+                  <li key={m} className="flex items-center gap-1.5">
+                    {i === 0 ? (
+                      <Lock className="size-3.5 text-primary" />
+                    ) : (
+                      <span className="size-1 rounded-full bg-primary-light" />
+                    )}
+                    {m}
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <ul
-              className="mt-6 flex animate-enter flex-wrap justify-center gap-x-4 gap-y-2 text-caption text-ink-muted lg:justify-start"
-              style={stagger(4)}
-            >
-              {hero.microcopy.map((m, i) => (
-                <li key={m} className="flex items-center gap-1.5">
-                  {i === 0 ? (
-                    <Lock className="size-3.5 text-primary" />
-                  ) : (
-                    <span className="size-1 rounded-full bg-primary-light" />
-                  )}
-                  {m}
-                </li>
-              ))}
-            </ul>
+            {/* Social Proof (Card 3 Kolom) & Scroll Cue: Kurangi mt menjadi proporsional */}
+            <div className="mt-6 flex w-full flex-col items-center sm:mt-8 lg:items-start">
+              <dl
+                className="grid w-full max-w-xl animate-enter grid-cols-3 divide-x divide-border-subtle rounded-card border border-border-subtle/80 bg-white py-4 shadow-subtle"
+                style={stagger(5)}
+              >
+                {hero.stats.map((s) => (
+                  <div key={s.label} className="px-5 text-center">
+                    <dt className="sr-only">{s.label}</dt>
+                    <dd className="text-headline text-ink font-bold">{s.value}</dd>
+                    <dd className="mt-0.5 text-[11px] leading-tight text-ink-soft">{s.label}</dd>
+                  </div>
+                ))}
+              </dl>
 
-            <dl
-              className="mt-11 grid w-full max-w-xl animate-enter grid-cols-3 divide-x divide-border-subtle rounded-card border border-border-subtle/80 bg-white py-4 shadow-subtle"
-              style={stagger(5)}
-            >
-              {hero.stats.map((s) => (
-                <div key={s.label} className="px-5 text-center">
-                  <dt className="sr-only">{s.label}</dt>
-                  <dd className="text-headline text-ink font-bold">{s.value}</dd>
-                  <dd className="mt-0.5 text-[11px] leading-tight text-ink-soft">{s.label}</dd>
-                </div>
-              ))}
-            </dl>
+              {/* Minimal scroll down cue below 3-column card on mobile */}
+              <a
+                href="#hero-mockup-preview"
+                aria-label="Gulir ke pratinjau aplikasi"
+                className="mt-3.5 flex size-8 items-center justify-center text-ink-muted/70 transition-colors hover:text-primary lg:hidden"
+              >
+                <ChevronDown className="size-5 animate-bounce text-primary/80" />
+              </a>
+            </div>
           </div>
 
-          {/* Visual column: clean phone showcase with focused contextual cues */}
-          <div className="relative mx-auto w-full max-w-[560px] animate-enter lg:max-w-none" style={stagger(3)}>
+          {/* Visual column: clean phone showcase positioned below the fold on mobile */}
+          <div
+            id="hero-mockup-preview"
+            className="relative mx-auto w-full max-w-[560px] animate-enter pt-12 pb-8 sm:pt-16 sm:pb-12 lg:max-w-none lg:pt-0 lg:pb-0"
+            style={stagger(3)}
+          >
             <div className="relative flex justify-center">
               <PhoneFrame className="w-[300px] sm:w-[330px] lg:w-[350px] xl:w-[380px]">
                 <HomeScreen />
