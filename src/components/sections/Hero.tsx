@@ -118,8 +118,8 @@ export function Hero() {
 
               {/* Minimal scroll down cue below 3-column card on mobile */}
               <a
-                href="#hero-mockup-preview"
-                aria-label="Gulir ke pratinjau aplikasi"
+                href="#fitur"
+                aria-label="Gulir ke bagian fitur"
                 className="mt-3.5 flex size-8 items-center justify-center text-ink-muted/70 transition-colors hover:text-primary lg:hidden"
               >
                 <ChevronDown className="size-5 animate-bounce text-primary/80" />
@@ -127,10 +127,10 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Visual column: clean phone showcase positioned below the fold on mobile */}
+          {/* Visual column: clean phone showcase visible only on desktop (lg:block), keeping mobile focus on Features mockup */}
           <div
             id="hero-mockup-preview"
-            className="relative mx-auto w-full max-w-[560px] animate-enter pt-12 pb-8 sm:pt-16 sm:pb-12 lg:max-w-none lg:pt-0 lg:pb-0"
+            className="relative mx-auto hidden w-full max-w-[560px] animate-enter pt-12 pb-8 sm:pt-16 sm:pb-12 lg:block lg:max-w-none lg:pt-0 lg:pb-0"
             style={stagger(3)}
           >
             <div className="relative flex justify-center">

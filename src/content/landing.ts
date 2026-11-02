@@ -26,7 +26,7 @@ export const navLinks = [
 
 export type NavId = (typeof navLinks)[number]['id']
 
-export const DOWNLOAD_APK_URL = 'https://download.eva.id/eva-beta.apk'
+export const DOWNLOAD_APK_URL = '/downloads/eva-beta.apk'
 
 /* ------------------------------------------------------------------ */
 /* ------------------------------------------------------------------ */
