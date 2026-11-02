@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, Building2, Heart, PhoneCall, Stethoscope } from 'lucide-react'
+import { ArrowUpRight, Building2, Heart, PhoneCall, Stethoscope } from 'lucide-react'
 import { Link } from 'react-router'
 import { Button, Container, Logo } from '@/components/ui'
 import { crisisHotline, navLinks } from '@/content/landing'
@@ -78,11 +78,11 @@ export function Footer() {
                 id="footer-partner-apply"
                 to="/pengajuan-mitra"
                 data-cursor="MITRA"
-                variant="primary"
+                variant="social"
                 size="md"
                 className="w-full sm:w-auto"
                 leftIcon={<Building2 />}
-                rightIcon={<ArrowRight />}
+                rightIcon={<ArrowUpRight />}
               >
                 Ajukan Kemitraan Faskes
               </Button>

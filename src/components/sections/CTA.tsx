@@ -5,6 +5,31 @@ import { DOWNLOAD_APK_URL, waitlist } from '@/content/landing'
 
 export function CTA() {
   const [partnerTopic, setPartnerTopic] = useState<string | null>(null)
+  const [apkSize, setApkSize] = useState(() => waitlist.specs[1] || '~59 MB')
+
+  useEffect(() => {
+    // Dynamic runtime check: in case APK file on server was replaced without rebuilding frontend
+    if (!DOWNLOAD_APK_URL.startsWith('http') && !DOWNLOAD_APK_URL.startsWith('/')) return
+    let active = true
+
+    fetch(DOWNLOAD_APK_URL, { method: 'HEAD' })
+      .then((res) => {
+        if (!res.ok) return
+        const len = res.headers.get('content-length')
+        if (len && active) {
+          const bytes = parseInt(len, 10)
+          if (!isNaN(bytes) && bytes > 0) {
+            const mb = Math.round(bytes / (1024 * 1024))
+            setApkSize(`~${mb} MB`)
+          }
+        }
+      })
+      .catch(() => {})
+
+    return () => {
+      active = false
+    }
+  }, [])
 
   useEffect(() => {
     const onPartnerInquiry = (e: Event) => {
@@ -91,12 +116,12 @@ export function CTA() {
 
               {/* Version & Device Specs */}
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-                {waitlist.specs.map((spec) => (
+                {waitlist.specs.map((spec, i) => (
                   <span
                     key={spec}
                     className="rounded-pill border border-white/15 bg-white/10 px-3.5 py-1 text-xs font-semibold text-white/90 backdrop-blur-sm"
                   >
-                    {spec}
+                    {i === 1 ? apkSize : spec}
                   </span>
                 ))}
               </div>

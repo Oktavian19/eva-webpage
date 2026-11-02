@@ -135,7 +135,7 @@ export function Navbar() {
         <div
           id="mobile-menu"
           hidden={!open}
-          className="glass mt-2 origin-top animate-enter rounded-card p-3 md:hidden"
+          className="mt-2 origin-top animate-enter rounded-card border border-border-subtle/80 bg-white/96 p-3 shadow-nav backdrop-blur-xl md:hidden"
         >
           <ul className="flex flex-col">
             {navLinks.map((l) => (
