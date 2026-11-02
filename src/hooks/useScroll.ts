@@ -1,4 +1,11 @@
+import type Lenis from 'lenis'
 import { useEffect, useState } from 'react'
+
+declare global {
+  interface Window {
+    __evaLenis?: Lenis
+  }
+}
 
 /** True once the page is scrolled beyond `threshold` px. */
 export function useScrolled(threshold = 12) {
@@ -104,3 +111,57 @@ export function useActiveSection(ids: readonly string[]) {
   return active
 }
 
+/**
+ * Calculates the scroll position that vertically centers the main content of a section
+ * in the viewport (on desktop/fits), or anchors it safely below the floating navbar (on mobile/long content).
+ */
+export function getCenteredSectionScrollTop(id: string): number | null {
+  if (id === 'top') return 0
+
+  const targetEl = document.getElementById(id)
+  if (!targetEl) return null
+
+  const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768
+  const navOffset = isDesktop ? 78 : 74
+
+  const isSection = targetEl.tagName.toLowerCase() === 'section'
+  const cardEl = isSection
+    ? (targetEl.querySelector('#early-access-card, [id$="-card"]') as HTMLElement | null)
+    : null
+  const contentEl =
+    cardEl ||
+    (isSection ? ((targetEl.querySelector(':scope > div') || targetEl) as HTMLElement) : targetEl)
+
+  const rect = contentEl.getBoundingClientRect()
+  const elementTop = rect.top + window.scrollY
+  const elementHeight = rect.height
+  const viewportHeight = window.innerHeight
+
+  // Center content block in viewport if it fits (desktop); otherwise anchor safely below navbar
+  const idealOffset = (viewportHeight - elementHeight) / 2
+  const safeOffset = Math.max(navOffset + 16, idealOffset)
+  return Math.max(0, elementTop - safeOffset)
+}
+
+/**
+ * Universal centered smooth scroll handler for all in-page links and CTA buttons.
+ * Uses Lenis if available for buttery-smooth inertial motion, or falls back to window.scrollTo.
+ */
+export function scrollToCenteredSection(id: string, updateHistory = true) {
+  const scrollTop = getCenteredSectionScrollTop(id)
+  if (scrollTop === null) return
+
+  if (typeof window !== 'undefined' && window.__evaLenis) {
+    window.__evaLenis.scrollTo(scrollTop, { duration: 1.2 })
+  } else if (typeof window !== 'undefined') {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({
+      top: scrollTop,
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    })
+  }
+
+  if (updateHistory && typeof window !== 'undefined') {
+    history.pushState(null, '', id === 'top' ? '#top' : `#${id}`)
+  }
+}

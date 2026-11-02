@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { Button, Container, Logo } from '@/components/ui'
 import { navLinks } from '@/content/landing'
-import { useActiveSection, useScrolled } from '@/hooks/useScroll'
+import { scrollToCenteredSection, useActiveSection, useScrolled } from '@/hooks/useScroll'
 import { cn } from '@/lib/cn'
 
 const sectionIds = navLinks.map((l) => l.id)
@@ -24,37 +24,7 @@ export function Navbar() {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault()
     setOpen(false)
-
-    if (id === 'top') {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      history.pushState(null, '', '#top')
-      return
-    }
-
-    const targetEl = document.getElementById(id)
-    if (!targetEl) return
-
-    const isDesktop = window.innerWidth >= 768
-    const navOffset = isDesktop ? 78 : 74
-
-    // Find main content block inside section (Container or Box Card)
-    const contentEl = (targetEl.querySelector('& > div, [id$="-card"]') || targetEl) as HTMLElement
-    const rect = contentEl.getBoundingClientRect()
-    const elementTop = rect.top + window.scrollY
-    const elementHeight = rect.height
-    const viewportHeight = window.innerHeight
-
-    // Center content block in viewport if it fits (desktop); otherwise anchor safely below navbar
-    const idealOffset = (viewportHeight - elementHeight) / 2
-    const safeOffset = Math.max(navOffset + 16, idealOffset)
-    const offsetPosition = Math.max(0, elementTop - safeOffset)
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth',
-    })
-
-    history.pushState(null, '', `#${id}`)
+    scrollToCenteredSection(id)
   }
 
   useLayoutEffect(() => {

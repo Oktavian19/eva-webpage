@@ -10,7 +10,7 @@ import type { CSSProperties } from 'react'
 import { HomeScreen, Waveform } from '@/components/mockups/AppScreens'
 import { PhoneFrame } from '@/components/mockups/PhoneFrame'
 import { Button, Container } from '@/components/ui'
-import { hero } from '@/content/landing'
+import { DOWNLOAD_APK_URL, hero } from '@/content/landing'
 
 const stagger = (i: number) => ({ '--i': i }) as CSSProperties
 
@@ -71,7 +71,10 @@ export function Hero() {
                 </Button>
                 <Button
                   id="hero-cta-apk"
-                  href="#early-access"
+                  href={DOWNLOAD_APK_URL}
+                  download="EVA-Beta.apk"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   data-cursor="UNDUH"
                   variant="secondary"
                   size="lg"

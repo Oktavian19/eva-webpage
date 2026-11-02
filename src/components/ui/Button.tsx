@@ -1,4 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
+import { Link, type LinkProps } from 'react-router'
 import { cn } from '@/lib/cn'
 
 type Variant = 'primary' | 'fab' | 'secondary' | 'outline' | 'social' | 'ghost' | 'light'
@@ -40,15 +41,17 @@ interface CommonProps {
   leftIcon?: ReactNode
   rightIcon?: ReactNode
   fullWidth?: boolean
+  className?: string
 }
 
-type ButtonAsButton = CommonProps & ButtonHTMLAttributes<HTMLButtonElement> & { href?: undefined }
-type ButtonAsLink = CommonProps & AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }
-export type ButtonProps = ButtonAsButton | ButtonAsLink
+type ButtonAsButton = CommonProps & ButtonHTMLAttributes<HTMLButtonElement> & { href?: undefined; to?: undefined }
+type ButtonAsLink = CommonProps & AnchorHTMLAttributes<HTMLAnchorElement> & { href: string; to?: undefined }
+type ButtonAsRouterLink = CommonProps & Omit<LinkProps, 'size'> & { to: string; href?: undefined }
+export type ButtonProps = ButtonAsButton | ButtonAsLink | ButtonAsRouterLink
 
 /**
  * Pill button mirroring the mobile `CustomPillButton`.
- * Renders an `<a>` when `href` is provided, otherwise a `<button>`.
+ * Renders a `<Link>` when `to` is provided, an `<a>` when `href` is provided, otherwise a `<button>`.
  */
 export function Button(props: ButtonProps) {
   const {
@@ -74,6 +77,14 @@ export function Button(props: ButtonProps) {
       )}
     </span>
   )
+
+  if ('to' in rest && typeof rest.to === 'string') {
+    return (
+      <Link className={classes} {...(rest as LinkProps)}>
+        {content}
+      </Link>
+    )
+  }
 
   if (typeof rest.href === 'string') {
     return (

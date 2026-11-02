@@ -50,7 +50,7 @@ Berikut adalah hasil analisis komprehensif terhadap seluruh basis dokumen, spesi
 
 ### 👥 Target Persona
 * **Persona Utama (B2C / Pengguna Akhir):** Mahasiswa, *fresh graduate*, dan profesional muda Generasi Z (usia 15–27 tahun) yang sering bergulat dengan *overthinking*, tekanan akademik/karir, dan kelelahan emosional, namun terhambat biaya konseling tatap muka yang mahal (Rp 250rb–500rb/sesi), takut dihakimi (*stigma*), atau jenuh dengan aplikasi kesehatan mental yang pasif dan kaku.
-* **Persona Pendukung (Penyedia Layanan / Praktisi):** Psikolog klinis dan pusat konseling kampus/faskes primer yang membutuhkan ringkasan kondisi awal pasien (*Intake Summary*) yang terstandar, objektif, dan terverifikasi untuk mempercepat sesi konsultasi pertama.
+* **Persona Pendukung (Penyedia Layanan / Praktisi):** Psikolog klinis dan fasilitas pelayanan kesehatan (faskes) primer yang membutuhkan ringkasan kondisi awal pasien (*Intake Summary*) yang terstandar, objektif, dan terverifikasi untuk mempercepat sesi konsultasi pertama.
 
 ### 🎯 Rekomendasi Tagline & Headline Hero Section
 
@@ -162,7 +162,7 @@ Berikut adalah hasil analisis komprehensif terhadap seluruh basis dokumen, spesi
 * **Teks Tombol:**
   * `[ Coba EVA Sekarang — Gratis ]` atau `[ Unduh Versi Beta (APK) ]`
 * **Micro-copy di Bawah Tombol:**
-  * *"🔒 100% Privat & Terenkripsi • Tanpa Perlu Kartu Kredit • Ruang Aman Bebas Stigma"*
+  * *"🔒 100% Privat & Terenkripsi • Tanpa Biaya Langganan • Ruang Aman Bebas Stigma"*
 
 ### 📬 CTA Sekunder (Mid-Page / Early Access Waitlist)
 * **Headline:** **"Jadilah yang Pertama Merasakan Ruang Curhat yang Berbeda."**
@@ -170,9 +170,9 @@ Berikut adalah hasil analisis komprehensif terhadap seluruh basis dokumen, spesi
 * **Teks Input & Tombol:**
   * `[ Masukkan Email / WhatsApp Kamu ]` ➔ `[ Gabung Early Access ]`
 
-### 📚 CTA Tersier (Footer / Untuk Profesional & Mitra Kampus)
+### 📚 CTA Tersier (Footer / Untuk Profesional & Mitra Faskes)
 * **Teks Tombol:**
-  * `[ Pelajari Kerja Sama Layanan Kampus ]` / `[ Baca Evaluasi Klinis Psikolog ]`
+  * `[ Ajukan Kemitraan Faskes ]` / `[ Baca Evaluasi Klinis Psikolog ]`
 
 ---
 

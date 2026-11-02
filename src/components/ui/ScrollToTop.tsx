@@ -1,5 +1,5 @@
 import { ArrowUp } from 'lucide-react'
-import { usePrefersReducedMotion, useScrolled, useScrollProgress } from '@/hooks/useScroll'
+import { scrollToCenteredSection, useScrolled, useScrollProgress } from '@/hooks/useScroll'
 import { cn } from '@/lib/cn'
 
 const RADIUS = 20
@@ -12,16 +12,11 @@ const CIRCUMFERENCE = 2 * Math.PI * RADIUS
 export function ScrollToTop() {
   const visible = useScrolled(300)
   const progress = useScrollProgress()
-  const reducedMotion = usePrefersReducedMotion()
 
   const strokeDashoffset = CIRCUMFERENCE * (1 - progress)
 
   const handleClick = () => {
-    if (window.__evaLenis && !reducedMotion) {
-      window.__evaLenis.scrollTo(0, { duration: 1.2 })
-    } else {
-      window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' })
-    }
+    scrollToCenteredSection('top')
   }
 
   return (

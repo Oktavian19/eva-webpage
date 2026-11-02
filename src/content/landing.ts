@@ -26,6 +26,8 @@ export const navLinks = [
 
 export type NavId = (typeof navLinks)[number]['id']
 
+export const DOWNLOAD_APK_URL = 'https://download.eva.id/eva-beta.apk'
+
 /* ------------------------------------------------------------------ */
 /* ------------------------------------------------------------------ */
 /* Hero                                                                */
@@ -38,7 +40,7 @@ export const hero = {
     'Tak perlu mengetik panjang saat lelah. Curhatkan suaramu, pulihkan tenangmu dalam hitungan menit.',
   primaryCta: 'Mulai Curhat Suara — Gratis',
   secondaryCta: 'Unduh Versi Beta (APK)',
-  microcopy: ['100% Privat di Ponsel', 'Tanpa Kartu Kredit', 'Bebas Stigma'],
+  microcopy: ['100% Privat di Ponsel', 'Tanpa Biaya Langganan', 'Bebas Stigma'],
   stats: [
     { value: '24/7', label: 'Selalu siap mendengar' },
     { value: '3 mnt', label: 'Misi pemulihan cepat' },
@@ -203,7 +205,7 @@ export const faqs: FaqItem[] = [
     category: 'Biaya & Akses',
     question: 'Apakah aplikasi EVA gratis digunakan?',
     answer:
-      'Selama periode Early Access, seluruh fitur inti EVA — termasuk Curhat Suara 24/7, Misi Koping 3 Menit, dan Diari Otomatis — dapat kamu gunakan sepenuhnya gratis tanpa perlu kartu kredit.',
+      'Selama periode Early Access, seluruh fitur inti EVA — termasuk Curhat Suara 24/7, Misi Koping 3 Menit, dan Diari Otomatis — dapat kamu gunakan sepenuhnya gratis tanpa biaya langganan.',
   },
   {
     id: 'clinical',
@@ -224,7 +226,7 @@ export const faqs: FaqItem[] = [
     category: 'Ketersediaan Perangkat',
     question: 'Di perangkat apa saja saya bisa mengunduh EVA?',
     answer:
-      'Saat ini versi Beta (APK) tersedia untuk perangkat Android, dan versi iOS sedang dalam tahap pengujian akhir. Daftarkan email atau WhatsApp kamu di bagian Early Access untuk langsung menerima tautan unduhan resmi.',
+      'Saat ini versi Beta (APK) dapat langsung kamu unduh dan pasang untuk perangkat Android melalui tombol unduh di halaman ini. Versi iOS sedang dalam tahap pengujian akhir.',
   },
 ]
 
@@ -232,15 +234,16 @@ export const faqs: FaqItem[] = [
 /* CTA                                                                 */
 /* ------------------------------------------------------------------ */
 export const waitlist = {
-  kicker: 'Early Access',
+  kicker: 'Akses Awal Langsung',
   title: 'Mulai Perjalanan Tenangmu Bersama EVA.',
   description:
-    'Dapatkan akses awal gratis untuk mencoba fitur curhat suara dan latihan koping terpandu.',
-  placeholder: 'Masukkan Email / WhatsApp Kamu',
-  button: 'Gabung Early Access',
+    'Unduh versi beta sekarang untuk mencoba fitur curhat suara dan latihan koping terpandu langsung di ponsel Android kamu.',
+  button: 'Unduh Versi Beta (APK)',
+  specs: ['Android 8.0+', '~28 MB', 'Bebas Biaya Langganan'],
+  note: '100% Aman • Privasi tersimpan di ponsel • Bebas biaya',
 }
 
-export const partnerCtas = ['Pelajari Kerja Sama Layanan Kampus', 'Baca Evaluasi Klinis Psikolog']
+export const partnerCtas = ['Ajukan Kemitraan Faskes', 'Baca Evaluasi Klinis Psikolog']
 
 export const crisisHotline = 'Hubungi Layanan Krisis Bebas Pulsa (119 Ext 8)'
 

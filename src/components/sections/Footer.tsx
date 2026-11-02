@@ -1,9 +1,7 @@
-import { ArrowUpRight, GraduationCap, Heart, PhoneCall, Stethoscope } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Building2, Heart, PhoneCall, Stethoscope } from 'lucide-react'
 import { Link } from 'react-router'
 import { Button, Container, Logo } from '@/components/ui'
-import { crisisHotline, navLinks, partnerCtas } from '@/content/landing'
-
-const partnerIcons = [GraduationCap, Stethoscope]
+import { crisisHotline, navLinks } from '@/content/landing'
 
 export function Footer() {
   const year = new Date().getFullYear()
@@ -74,26 +72,33 @@ export function Footer() {
           </nav>
 
           <div>
-            <p className="text-overline text-ink-muted uppercase">Untuk Profesional &amp; Mitra Kampus</p>
+            <p className="text-overline text-ink-muted uppercase">Untuk Profesional &amp; Mitra Faskes</p>
             <div className="mt-4 flex flex-col items-start gap-3">
-              {partnerCtas.map((label, i) => {
-                const Icon = partnerIcons[i]
-                return (
-                  <Button
-                    key={label}
-                    id={`footer-partner-${i}`}
-                    href="#early-access"
-                    data-cursor="MITRA"
-                    onClick={() => handlePartnerClick(label)}
-                    variant="social"
-                    size="md"
-                    leftIcon={<Icon />}
-                    rightIcon={<ArrowUpRight />}
-                  >
-                    {label}
-                  </Button>
-                )
-              })}
+              <Button
+                id="footer-partner-apply"
+                to="/pengajuan-mitra"
+                data-cursor="MITRA"
+                variant="primary"
+                size="md"
+                className="w-full sm:w-auto"
+                leftIcon={<Building2 />}
+                rightIcon={<ArrowRight />}
+              >
+                Ajukan Kemitraan Faskes
+              </Button>
+              <Button
+                id="footer-partner-evaluation"
+                href="#early-access"
+                data-cursor="MITRA"
+                onClick={() => handlePartnerClick('Baca Evaluasi Klinis Psikolog')}
+                variant="social"
+                size="md"
+                className="w-full sm:w-auto"
+                leftIcon={<Stethoscope />}
+                rightIcon={<ArrowUpRight />}
+              >
+                Baca Evaluasi Klinis Psikolog
+              </Button>
             </div>
           </div>
         </div>

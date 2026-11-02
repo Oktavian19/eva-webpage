@@ -1,17 +1,9 @@
-import { CheckCircle2, Lock, Mail, Send, Sparkles, X } from 'lucide-react'
-import { useEffect, useState, type FormEvent } from 'react'
-import { Button, Container, Input, LunaOrb } from '@/components/ui'
-import { waitlist } from '@/content/landing'
-import { addWaitlistEntry } from '@/lib/portalStore'
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const PHONE_RE = /^(\+62|62|0)8[0-9]{7,12}$/
-
-type Status = 'idle' | 'invalid' | 'success'
+import { Download, ShieldCheck, Sparkles, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Button, Container, LunaOrb } from '@/components/ui'
+import { DOWNLOAD_APK_URL, waitlist } from '@/content/landing'
 
 export function CTA() {
-  const [value, setValue] = useState('')
-  const [status, setStatus] = useState<Status>('idle')
   const [partnerTopic, setPartnerTopic] = useState<string | null>(null)
 
   useEffect(() => {
@@ -20,26 +12,11 @@ export function CTA() {
       const topic = customEvent.detail?.topic
       if (topic) {
         setPartnerTopic(topic)
-        setStatus((prev) => (prev === 'success' ? 'idle' : prev))
-        window.setTimeout(() => {
-          document.getElementById('waitlist-contact')?.focus()
-        }, 450)
       }
     }
     window.addEventListener('eva:partner-inquiry', onPartnerInquiry)
     return () => window.removeEventListener('eva:partner-inquiry', onPartnerInquiry)
   }, [])
-
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const v = value.trim().replace(/[\s-]/g, '')
-    if (!EMAIL_RE.test(value.trim()) && !PHONE_RE.test(v)) {
-      setStatus('invalid')
-      return
-    }
-    addWaitlistEntry(value.trim(), partnerTopic)
-    setStatus('success')
-  }
 
   return (
     <section
@@ -71,11 +48,17 @@ export function CTA() {
             </p>
 
             {/* Partner inquiry context banner triggered from Footer */}
-            {partnerTopic && status !== 'success' && (
-              <div className="mt-6 inline-flex items-center gap-2 rounded-pill border border-primary-light/30 bg-primary/25 py-1.5 pr-2.5 pl-3.5 text-caption !tracking-normal text-white backdrop-blur-sm animate-enter">
+            {partnerTopic && (
+              <div className="mt-6 inline-flex items-center gap-2 rounded-pill border border-primary-light/30 bg-primary/25 py-2 pr-3 pl-4 text-caption !tracking-normal text-white backdrop-blur-sm animate-enter">
                 <Sparkles className="size-3.5 text-primary-light" />
                 <span>
-                  Topik: <strong>{partnerTopic}</strong> — masukkan kontakmu untuk dokumen lengkap
+                  Topik Kemitraan: <strong>{partnerTopic}</strong> — hubungi tim kami di{' '}
+                  <a
+                    href={`mailto:kemitraan@eva.id?subject=${encodeURIComponent(`Kemitraan EVA: ${partnerTopic}`)}`}
+                    className="underline decoration-primary-light font-bold hover:text-primary-light"
+                  >
+                    kemitraan@eva.id
+                  </a>
                 </span>
                 <button
                   type="button"
@@ -89,77 +72,41 @@ export function CTA() {
               </div>
             )}
 
-            {status === 'success' ? (
-              <div
-                role="status"
-                className="mt-10 flex w-full max-w-2xl animate-enter items-center gap-3 rounded-card border border-white/15 bg-white/10 p-5 text-left backdrop-blur-md"
+            {/* Direct Download Action Card */}
+            <div className="mt-10 flex w-full max-w-xl flex-col items-center">
+              <Button
+                id="early-access-download-btn"
+                href={DOWNLOAD_APK_URL}
+                download="EVA-Beta.apk"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="UNDUH"
+                size="lg"
+                variant="light"
+                className="h-[54px] w-full sm:w-auto px-8 text-base font-bold shadow-btn"
+                leftIcon={<Download className="size-5" />}
               >
-                <CheckCircle2 className="size-7 shrink-0 text-success" />
-                <div>
-                  <p className="text-title-md text-white">Kamu sudah masuk daftar! 💜</p>
-                  <p className="text-body-md text-white/70">
-                    {partnerTopic
-                      ? `Tim kemitraan kami juga akan mengirimkan informasi "${partnerTopic}" ke kontakmu.`
-                      : 'Kami akan mengabari saat akses beta EVA dibuka.'}
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <form onSubmit={onSubmit} noValidate className="mt-10 w-full max-w-2xl">
-                <div className="flex flex-col gap-3 rounded-[28px] border border-white/10 bg-white/5 p-2 backdrop-blur-md sm:flex-row sm:rounded-pill">
-                  <label htmlFor="waitlist-contact" className="sr-only">
-                    Email atau nomor WhatsApp
-                  </label>
-                  <Input
-                    id="waitlist-contact"
-                    name="contact"
-                    autoComplete="email"
-                    inputMode="email"
-                    placeholder={
-                      partnerTopic
-                        ? `Email / WhatsApp untuk info ${partnerTopic}`
-                        : waitlist.placeholder
-                    }
-                    value={value}
-                    invalid={status === 'invalid'}
-                    aria-describedby="waitlist-hint"
-                    onChange={(e) => {
-                      setValue(e.target.value)
-                      if (status === 'invalid') setStatus('idle')
-                    }}
-                    leftIcon={<Mail />}
-                    containerClassName="h-[52px] w-full border-transparent sm:h-[54px] sm:w-auto sm:flex-1"
-                  />
-                  <Button
-                    id="waitlist-submit"
-                    type="submit"
-                    data-cursor="GABUNG"
-                    size="lg"
-                    variant="light"
-                    className="h-[52px] w-full shrink-0 sm:h-[54px] sm:w-auto"
-                    rightIcon={<Send />}
+                {waitlist.button}
+              </Button>
+
+              {/* Version & Device Specs */}
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+                {waitlist.specs.map((spec) => (
+                  <span
+                    key={spec}
+                    className="rounded-pill border border-white/15 bg-white/10 px-3.5 py-1 text-xs font-semibold text-white/90 backdrop-blur-sm"
                   >
-                    {waitlist.button}
-                  </Button>
-                </div>
-                <p
-                  id="waitlist-hint"
-                  className={
-                    status === 'invalid'
-                      ? 'mt-3 text-caption text-[#FCA5A5]'
-                      : 'mt-3 text-caption text-white/50'
-                  }
-                >
-                  {status === 'invalid' ? (
-                    'Masukkan email atau nomor WhatsApp yang valid ya.'
-                  ) : (
-                    <span className="inline-flex items-center gap-1.5">
-                      <Lock className="size-3" /> Kami tidak akan pernah membagikan kontakmu.
-                    </span>
-                  )}
-                </p>
-              </form>
-            )}
+                    {spec}
+                  </span>
+                ))}
+              </div>
+
+              {/* Security & Privacy Assurance */}
+              <p className="mt-4 inline-flex items-center gap-1.5 text-caption text-white/60">
+                <ShieldCheck className="size-3.5 text-success" />
+                {waitlist.note}
+              </p>
+            </div>
           </div>
         </div>
       </Container>

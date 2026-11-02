@@ -188,7 +188,7 @@ export const INITIAL_WAITLIST: WaitlistEntry[] = [
     id: 'wl-1',
     contact: 'bem.psikologi@ugm.ac.id',
     channel: 'Email',
-    topic: 'Pelajari Kerja Sama Layanan Kampus',
+    topic: 'Pelajari Kemitraan Faskes',
     submittedAt: '2026-10-27',
     status: 'invited',
   },
